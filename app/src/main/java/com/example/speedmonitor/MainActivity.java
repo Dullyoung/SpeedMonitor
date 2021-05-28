@@ -83,15 +83,25 @@ public class MainActivity extends AppCompatActivity {
                             lastTime = System.currentTimeMillis();
                             lastLatitude = location.getLatitude();
                             lastLongitude = location.getLongitude();
-                            return;
                         }
                         double distance = getDistance(lastLongitude, lastLatitude,
                                 location.getLongitude(), location.getLatitude());
                         long time = System.currentTimeMillis() - lastTime;
-                        String speed = distance / (time * 1000) + "mm/s";
+                        String speed;
+                        if (time == 0) {
+                            speed = "0 mm/s";
+                        } else {
+                            speed = distance / (time * 1000) + " mm/s";
+                        }
                         TextView textView = findViewById(R.id.tv_msg);
-                        String text = "lastTime:" + lastTime + "   lastLatitude:" + lastLatitude +
-                                "   lastLongitude:" + lastLongitude + "   speed" + speed;
+                        String text = "上次时间:" + lastTime +
+                                "两次时间间隔" + time +
+                                "\n本次纬度:" + location.getLatitude() +
+                                "\n上次纬度:" + lastLatitude +
+                                "\n本次经度:" + location.getLongitude() +
+                                "\n上次经度:" + lastLongitude +
+                                "\n速度：" + speed +
+                                "\n精度" + location.getAccuracy();
                         textView.setText(text);
                         setUI(speed);
                     }
